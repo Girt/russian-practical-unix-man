@@ -247,63 +247,62 @@
 			Команды &mdash; это способ, с помощью которого пользователь управляет своим компьютером. Я уже обращал внимание на команду
 			<a href="#cmd_man" class="cmd">man</a>: если вы когда-либо взаимодействовали с системой UNIX, вы, вероятно, запускали как минимум
 			<span class="cmdline">man intro</span> или <span class="cmdline">man man</span>, чтобы ознакомиться с вашей системой.
-class
 		</p>
 		<p>
-			In this chapter, I'll discuss how to document these commands with <span class="lang">mdoc</span>.  
+			В этой главе будет рассмотрено как написать справочную страницу для этих команд с помощью <span class="lang">mdoc</span>.
 		</p>
 		<p>
-			This may be unfamiliar if you're accustomed to graphical interfaces &mdash; all of our examples will refer to
-			command-line, text-based commands.  If your target environment isn't a UNIX system, it's a good idea to read these
-			examples anyway, as as they will expose the rudimentary structure of the <span class="lang">mdoc</span> language.  As
-			mentioned before, reading an introductory text on UNIX will help avoid confusion.
+			Это может показаться незнакомым, если вы привыкли к графическим интерфейсам &mdash; все наши примеры будут касаться
+			текстовых команд командной строки. Если ваша целевая среда не является системой UNIX, рекомендуется ознакомиться с этими
+			примерами в любом случае, поскольку они раскрывают элементарную структуру языка <span class="lang">mdoc</span>. Как
+			упоминалось ранее, чтение вводного руководства по UNIX поможет избежать путаницы.
 		</p>
 		<p>
-			Let's begin by making a mental checklist for the criteria that make a good manual for a command.  This checklist arises
-			by inverting what a manual reader expects in opening a manual: what does the command do and how do I operate it?
+			Давайте начнем с составления мысленного списка критериев хорошей инструкциии для команды. Этот контрольный перечень
+			возникает путем инвертирования того, что ожидает читатель при открытии справочной страницы:
+			что делает команда и как мне с ней работать?
 		</p>
 		<ul>
 			<li>
-				Do I describe the calling syntax of the command?
+				Описать ли синтаксис команды?
 			</li>
 			<li>
-				Do I describe each flag and argument of the command?
+				Описать все флаги и аргументы команды?
 			</li>
 			<li>
-				Do I describe the command's operation?
+				Описать ли работу команды?
 			</li>
 			<li>
-				Do I describe the command's exit status?
+				Описать ли возвращаемые значения?
 			</li>
 			<li>
-				Do I describe referenced files and environment variables?
+				Описать ли связанные файлы и переменные среды?
 			</li>
 		</ul>
 		<p>
-			Above all, the best litmus test is whether a colleague or friend can read your manual and be able to use your command
-			without any assistance on your part.  Don't be discouraged by how this can take several tries to get right!
+			Прежде всего, лучшим тестом будет сможет ли коллега или друг прочитать ваше руководство и использовать вашу команду без какой-либо
+			помощи с вашей стороны. Не расстраивайтесь из-за того, что для правильного выполнения может потребоваться несколько попыток!
 		</p>
 		<p>
-			I'll begin with a simple command, <span class="cmd">hi</span>, which prints <span class="screen">hello, world</span> to
-			the screen.  I'll then add some command-line arguments to this command.  By the time you finish this chapter, you should
-			have a grasp of <span class="lang">mdoc</span> syntax and some of its more widely-used macros.
+			Я начну с простой команды <span class="cmd">hi</span>, которая выводит на экран <span class="screen">hello, world</span>.
+			Затем я добавлю к этой команде несколько аргументов командной строки. К тому времени, когда вы закончите эту главу,
+			вы должны иметь представление о синтаксисе <span class="lang">mdoc</span> и некоторых его наиболее широко используемых макросах.
 		</p>
 		<p>
-			In this text, I'll refer to the invocation of commands as <span class="cmdline"><span class="cmd">cmd</span> <span
-					class="cmdopt"><span class="cmdflag">flag</span> <span class="cmdarg">farg</span></span> <span
-					class="cmdarg">arg</span></span>.  Here, <span class="cmd">cmd</span> refers to the command invocation
-			name, <span class="cmdflag">flag</span> is a flag (or switch) to that command, <span class="cmdarg">farg</span> is an
-			argument to a flag (not all flags have arguments), and <span class="cmdarg">arg</span> is an argument to the command.
+			В этом тексте я буду ссылаться на синтаксис вызова команд <span class="cmdline"><span class="cmd">cmd</span> <span class="cmdopt">
+			<span class="cmdflag">flag</span> <span class="cmdarg">farg</span></span> <span class="cmdarg">arg</span></span>.
+			Здесь <span class="cmd">cmd</span> &mdash; имя вызываемой команды, <span class="cmdflag">flag</span> &mdash; это параметры
+			(ключи, флаги или опции) для этой команды, <span class="cmdarg">farg</span> &mdash; это аргументы параметров
+			(не все параметры имеют аргументы) и <span class="cmdarg">arg</span> &mdash; это аргументы команды.
 		</p>
 		<p>
-			The dash in front of <span class="cmdflag">flag</span> indicates a flag, while the square brackets around <span
-				class="cmdopt"><span class="cmdflag">flag</span> <span class="cmdarg">farg</span></span> indicate an optional
-			part of the invocation.  Since <span class="cmdarg">arg</span> is not bracketed, it is a mandatory part of the
-			invocation.
+			Дефис перед <span class="cmdflag">flag</span> указывает на параметр, в то время как квадратные скобки вокруг <span class="cmdopt">
+			<span class="cmdflag">flag</span> <span class="cmdarg">farg</span></span> указывают на необязательную часть синтаксиса команды.
+			Поскольку <span class="cmdarg">arg</span> не заключен в квадратные скобки, он является обязательной частью.
 		</p>
 		<p>
-			This convention is formalised by the <a class="term" href="#posix">POSIX</a>.1-2008 standard (Base
-			Definitions, sec. 12.1), so you can expect to see it often in the UNIX world.
+			Это соглашение официально закреплено в стандарте <a class="term" href="#posix">POSIX</a>.1-2008 standard (Base Definitions, sec. 12.1),
+			так что вы будете часто встречаться с ним в мире UNIX.
 		</p>
 	</div>
 	<div class="page">
